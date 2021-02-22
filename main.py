@@ -1,16 +1,18 @@
+from Transaction import Transaction
 from Block import Block
 from Blockchain import Blockchain
 
 
 xxuegooCoin = Blockchain()
+xxuegooCoin.createTransaction(Transaction('address1', 'address2', 100))
+xxuegooCoin.createTransaction(Transaction('address2', 'address1', 50))
 
-print('Mining block 1...')
-xxuegooCoin.addBlock(Block(1, '02/01/2021', { 'amount': 4} ))
-print('Mining block 2...')
-xxuegooCoin.addBlock(Block(2, '02/01/2021', { 'amount': 7} ))
+print('\nStarting the miner...')
+xxuegooCoin.minePendingTransactions('xxuegoos-address')
 
-# print('Is blockchain valid? {}'.format(xxuegooCoin.isChainValid()))
-# print(xxuegooCoin)
-# xxuegooCoin.chain[1].data = { 'amount' : 100 }
-# xxuegooCoin.chain[1].hash = xxuegooCoin.chain[1].calculateHash()
-# print('Is blockchain valid? {}'.format(xxuegooCoin.isChainValid()))
+print('\nBalance of xxuegoo is: {}'.format(xxuegooCoin.getBalanceOfAddress('xxuegoos-address')))
+
+print('\nStarting the miner again...')
+xxuegooCoin.minePendingTransactions('xxuegoos-address')
+
+print('\nBalance of xxuegoo is: {}'.format(xxuegooCoin.getBalanceOfAddress('xxuegoos-address')))

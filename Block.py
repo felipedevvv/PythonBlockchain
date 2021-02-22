@@ -1,17 +1,17 @@
+from Transaction import Transaction
 import hashlib as hash
 import json
 
 class Block:
-    def __init__(self, index, timestamp, data, previousHash = ''):
-        self.index = index
+    def __init__(self, timestamp, transactions, previousHash = ''):
         self.timestamp = timestamp
-        self.data : dict = data
+        self.transactions = transactions
         self.previousHash = previousHash
         self.nonce = 0
         self.hash = self.calculateHash()
 
     def calculateHash(self):
-        hashValue = hash.sha256((str(self.index) + self.timestamp + str(self.nonce) + json.dumps(self.data)).encode('utf-8'))
+        hashValue = hash.sha256((self.timestamp + str(self.nonce) + json.dumps(str(self.transactions))).encode('utf-8'))
         hashValue.update(str.encode('UTF-8'))
         hashValueHex = hashValue.hexdigest()
         return hashValueHex
@@ -19,9 +19,8 @@ class Block:
     def __str__(self):
         return json.dumps(
             {
-                'index' : self.index,
                 'timestamp' : self.timestamp,
-                'data' : self.data,
+                'transactions' : str(self.transactions),
                 'previousHash' : self.previousHash,
                 'hash' : self.hash
             },
